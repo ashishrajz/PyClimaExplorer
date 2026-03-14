@@ -9,3 +9,4 @@ pydeck
 matplotlib
 rich
 streamlit-plotly-events
+folium
