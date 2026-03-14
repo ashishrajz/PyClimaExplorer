@@ -10,3 +10,4 @@ matplotlib
 rich
 streamlit-plotly-events
 folium
+streamlit_folium
