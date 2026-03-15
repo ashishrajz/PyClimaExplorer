@@ -185,7 +185,6 @@ map_data = map_data.values
 # ===============================
 
 selected_points = None
-click_data = None
 
 if not view_mode:
 
@@ -199,7 +198,6 @@ if not view_mode:
         title=f"{variable} at {str(selected_time)[:10]}"
     )
 
-    # UI UPGRADE: Set background to transparent to inherit the glass theme
     fig.update_layout(
         height=600,
         paper_bgcolor="rgba(0,0,0,0)",
@@ -209,24 +207,20 @@ if not view_mode:
     fig.update_xaxes(showgrid=False)
     fig.update_yaxes(showgrid=False)
 
-    fig.add_shape(
-        type="rect",
-        x0=min(lon),
-        x1=max(lon),
-        y0=min(lat),
-        y1=max(lat),
-        line=dict(color="rgba(34, 211, 238, 0.4)", width=1), # Matched line color to theme
-    )
-
+    # render the graph ONCE
     st.plotly_chart(fig, width="stretch")
 
-    selected_points = plotly_events(
-    fig,
-    click_event=True,
-    hover_event=False,
-    override_height=600,
-    key="map_events"
-)
+    # invisible container for click events
+    event_container = st.empty()
+
+    with event_container:
+        selected_points = plotly_events(
+            fig,
+            click_event=True,
+            hover_event=False,
+            override_height=0,
+            key="map_events"
+        )
 
 
 # ===============================
@@ -236,8 +230,6 @@ if not view_mode:
 else:
 
     lon_grid, lat_grid = np.meshgrid(lon, lat)
-
-
 
     df = pd.DataFrame({
         "lat": lat_grid.flatten(),
@@ -262,7 +254,6 @@ else:
         )
     )
 
-    # UI UPGRADE: Set background to transparent
     fig.update_layout(
         title=f"3D Globe — {variable}",
         template="plotly_dark",
@@ -274,11 +265,11 @@ else:
             showland=True,
             landcolor="rgb(50,50,50)",
             showocean=True,
-            oceancolor="rgba(10,10,25,0.5)", # Made ocean slightly transparent
+            oceancolor="rgba(10,10,25,0.5)",
             showcountries=True,
             showcoastlines=True,
-            coastlinecolor="rgba(34, 211, 238, 0.4)", # Coastlines match the theme
-            bgcolor="rgba(0,0,0,0)" # Transparent background for the globe
+            coastlinecolor="rgba(34, 211, 238, 0.4)",
+            bgcolor="rgba(0,0,0,0)"
         )
     )
 
@@ -286,15 +277,19 @@ else:
         projection_rotation=dict(lon=rotation_lon)
     )
 
+    # render once
     st.plotly_chart(fig, width="stretch")
 
-    click_data = plotly_events(
-    fig,
-    click_event=True,
-    hover_event=False,
-    override_height=800,
-    key="globe_events"
-)
+    event_container = st.empty()
+
+    with event_container:
+        click_data = plotly_events(
+            fig,
+            click_event=True,
+            hover_event=False,
+            override_height=0,
+            key="globe_events"
+        )
 
 # -----------------------
 # CLICK LOCATION (3D)
