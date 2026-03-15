@@ -14,11 +14,17 @@ def load_dataset(path):
         file_path = os.path.join(BASE_DIR, path)
         ds = xr.open_dataset(file_path)
 
-    # temperature conversion
+    # Normalize coordinate names
+    if "latitude" in ds.coords:
+        ds = ds.rename({"latitude": "lat"})
+    if "longitude" in ds.coords:
+        ds = ds.rename({"longitude": "lon"})
+
+    # Convert temperature
     if "t2m" in ds:
         ds["t2m"] = ds["t2m"] - 273.15
 
-    # wind speed
+    # Wind speed
     if "u10" in ds and "v10" in ds:
         ds["wind_speed"] = (ds["u10"]**2 + ds["v10"]**2) ** 0.5
 
