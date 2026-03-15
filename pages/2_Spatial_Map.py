@@ -167,15 +167,11 @@ rotation_lon = st.session_state.time_index * rotation_speed
 map_data = ds[variable].isel({time_dim: st.session_state.time_index})
 
 # Only coarsen if dataset is large
-if map_data.shape[0] > 100 and map_data.shape[1] > 100:
-    map_data = map_data.coarsen(
-        {lat_dim:4, lon_dim:4},
-        boundary="trim"
-    ).mean()
+map_data = ds[variable].sel({time_dim: selected_time}).values
 
+lat = ds[lat_dim].values
+lon = ds[lon_dim].values
 
-lat = map_data[lat_dim].values
-lon = map_data[lon_dim].values
 
 # ===============================
 # 2D MAP (UNCHANGED FUNCTIONALITY)
@@ -187,7 +183,7 @@ click_data = None
 if not view_mode:
 
     fig = px.imshow(
-        map_data.values,
+        map_data,
         x=lon,
         y=lat,
         origin="lower",
@@ -230,6 +226,7 @@ if not view_mode:
 else:
 
     lon_grid, lat_grid = np.meshgrid(lon, lat)
+
 
 
     df = pd.DataFrame({
