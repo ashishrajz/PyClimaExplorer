@@ -153,7 +153,7 @@ rotation_lon = st.session_state.time_index * rotation_speed
 # MAP DATA
 # -----------------------
 
-map_data = ds[variable].sel({time_dim: selected_time})
+map_data = ds[variable].isel({time_dim: st.session_state.time_index})
 
 map_data = map_data.coarsen(
     {lat_dim:4, lon_dim:4},
