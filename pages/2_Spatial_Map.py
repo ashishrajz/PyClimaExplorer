@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-from streamlit_plotly_events import plotly_events
+
 import plotly.express as px
 import numpy as np
 import plotly.graph_objects as go
@@ -182,9 +182,11 @@ map_data = map_data.values
 
 # ===============================
 # 2D MAP (UNCHANGED FUNCTIONALITY)
+
 # ===============================
 
 selected_points = None
+click_data = None
 
 if not view_mode:
 
@@ -207,20 +209,8 @@ if not view_mode:
     fig.update_xaxes(showgrid=False)
     fig.update_yaxes(showgrid=False)
 
-    # render the graph ONCE
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
-    # invisible container for click events
-    event_container = st.empty()
-
-    with event_container:
-        selected_points = plotly_events(
-            fig,
-            click_event=True,
-            hover_event=False,
-            override_height=0,
-            key="map_events"
-        )
 
 
 # ===============================
@@ -229,12 +219,17 @@ if not view_mode:
 
 else:
 
-    lon_grid, lat_grid = np.meshgrid(lon, lat)
+    # Downsample data to avoid browser crash
+    lat_small = lat[::8]
+    lon_small = lon[::8]
+    map_small = map_data[::8, ::8]
+
+    lon_grid, lat_grid = np.meshgrid(lon_small, lat_small)
 
     df = pd.DataFrame({
         "lat": lat_grid.flatten(),
         "lon": lon_grid.flatten(),
-        "value": map_data.flatten()
+        "value": map_small.flatten()
     })
 
     fig = go.Figure()
@@ -277,20 +272,7 @@ else:
         projection_rotation=dict(lon=rotation_lon)
     )
 
-    # render once
-    st.plotly_chart(fig, width="stretch")
-
-    event_container = st.empty()
-
-    with event_container:
-        click_data = plotly_events(
-            fig,
-            click_event=True,
-            hover_event=False,
-            override_height=0,
-            key="globe_events"
-        )
-
+    st.plotly_chart(fig, use_container_width=True)
 # -----------------------
 # CLICK LOCATION (3D)
 # -----------------------
