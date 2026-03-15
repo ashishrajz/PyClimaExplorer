@@ -250,13 +250,16 @@ if not view_mode:
         line=dict(color="rgba(34, 211, 238, 0.4)", width=1), # Matched line color to theme
     )
 
+    st.plotly_chart(fig, width="stretch")
+
     selected_points = plotly_events(
-        fig,
-        click_event=True,
-        hover_event=False,
-        override_height=600,
-        key="map"
-    )
+    fig,
+    click_event=True,
+    hover_event=False,
+    override_height=600,
+    key="map_events"
+)
+
 
 # ===============================
 # 3D GLOBE (UNCHANGED FUNCTIONALITY)
@@ -315,13 +318,15 @@ else:
         projection_rotation=dict(lon=rotation_lon)
     )
 
+    st.plotly_chart(fig, width="stretch")
+
     click_data = plotly_events(
-        fig,
-        click_event=True,
-        hover_event=False,
-        override_height=800,
-        key="globe"
-    )
+    fig,
+    click_event=True,
+    hover_event=False,
+    override_height=800,
+    key="globe_events"
+)
 
 # -----------------------
 # CLICK LOCATION (3D)
