@@ -135,7 +135,11 @@ st.success("Dataset loaded successfully")
 st.write("Variables in dataset:", list(ds.data_vars))
 
 # Save globally for other pages
+st.session_state["dataset_path"] = path
 st.session_state["dataset"] = ds
+st.session_state["uploaded_dataset"] = ds
+
+
 
 # Detect dimensions
 dims = dict(ds.sizes)

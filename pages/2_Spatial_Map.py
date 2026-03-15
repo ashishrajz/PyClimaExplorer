@@ -88,8 +88,19 @@ view_mode = True if view_selection == "3D Globe" else False
 # LOAD DATA
 # -----------------------
 
-ds = st.session_state.get("dataset")
+from utils.load_data import load_dataset
+
 variable = st.session_state.get("variable")
+
+# Reload dataset safely
+if "dataset_path" in st.session_state:
+    ds = load_dataset(st.session_state["dataset_path"])
+elif "uploaded_dataset" in st.session_state:
+    ds = st.session_state["uploaded_dataset"]
+else:
+    st.warning("Load dataset from Dataset Explorer first.")
+    st.stop()
+
 
 if ds is None:
     st.warning("Load dataset from Dataset Explorer first.")
