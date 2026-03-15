@@ -176,39 +176,7 @@ lon = ds[lon_dim].values
 map_data = map_data.values
 
 
-# ================= DEBUG OUTPUT =================
-st.write("DEBUG DATASET INFO")
-st.write("Variable:", variable)
 
-try:
-    st.write("Dataset dims:", ds.dims)
-except:
-    pass
-
-try:
-    st.write("Map shape:", map_data.shape)
-except:
-    pass
-
-try:
-    st.write("Latitude size:", len(lat))
-    st.write("Longitude size:", len(lon))
-except:
-    pass
-
-try:
-    st.write("Min value:", np.nanmin(map_data))
-    st.write("Max value:", np.nanmax(map_data))
-except:
-    st.write("Min/Max calculation failed")
-
-try:
-    st.write("Any NaNs:", np.isnan(map_data).any())
-except:
-    pass
-
-st.write("First 5 values:", map_data.flatten()[:5])
-# =================================================
 
 
 
@@ -250,7 +218,7 @@ if not view_mode:
         line=dict(color="rgba(34, 211, 238, 0.4)", width=1), # Matched line color to theme
     )
 
-    st.plotly_chart(fig, width="stretch")
+    
 
     selected_points = plotly_events(
     fig,
@@ -318,7 +286,7 @@ else:
         projection_rotation=dict(lon=rotation_lon)
     )
 
-    st.plotly_chart(fig, width="stretch")
+    
 
     click_data = plotly_events(
     fig,
