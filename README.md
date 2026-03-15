@@ -1,4 +1,6 @@
 # 🌍 PyClimaExplorer
+VIDEO URL: https://drive.google.com/file/d/1QoZES8aqwggcRaD0H9gzbt-cMOMzoeYP/view?usp=drivesdk
+
 
 PyClimaExplorer is an interactive climate data visualization platform built using **Streamlit, Xarray, and Plotly**.  
 It allows users to explore large **NetCDF climate datasets** through interactive maps, temporal analysis, dataset comparison, and AI-generated climate insights.
@@ -140,8 +142,7 @@ All dependencies are listed in **requirements.txt**.
 # 🎥 Demo Video
 
 The repository includes a **demo video showing the implementation and functionality of the project**.
-
-demo_video.mp4
+https://drive.google.com/file/d/1QoZES8aqwggcRaD0H9gzbt-cMOMzoeYP/view?usp=drivesdk
 
 
 The demo demonstrates:
@@ -157,7 +158,7 @@ The demo demonstrates:
 
 The PowerPoint presentation submitted for the hackathon is included in the repository:
 
-presentation.pptx
+[presentation.pptx](https://drive.google.com/file/d/14HHw69umZMJGPFyjNsi2kYL-KenfKV4-/view?usp=drivesdk)
 
 
 ---
