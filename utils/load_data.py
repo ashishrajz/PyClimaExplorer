@@ -3,7 +3,7 @@ import streamlit as st
 import os
 
 
-@st.cache_data
+
 def load_dataset(path):
 
     # Resolve absolute path (works on Streamlit Cloud)
