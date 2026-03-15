@@ -81,6 +81,52 @@ pip install -r requirements.txt
 
 
 ---
+## 🔑 API Key Setup (Required for Story Mode)
+
+The **AI Story Mode** feature uses the OpenRouter API to generate climate insights.
+
+To enable this feature, you must add your API key as a **Streamlit secret**.
+
+### 1️⃣ Get an API Key
+
+Create an account and generate an API key from:
+
+https://openrouter.ai
+
+or you can just ask us for our api key
+
+---
+
+### 2️⃣ Add the API Key Locally
+
+Create a folder named `.streamlit` in the root directory and add a file called:
+
+.streamlit/secrets.toml
+
+
+Then add your key like this:
+
+OPENROUTER_API_KEY = "your_api_key_here"
+
+
+---
+
+### 3️⃣ For Streamlit Cloud Deployment
+
+When deploying the app on **Streamlit Community Cloud**, add the key in the **App Settings → Secrets** section:
+
+OPENROUTER_API_KEY = "your_api_key_here" 
+
+
+---
+
+### ⚠️ Important
+
+Never commit your API key to the repository.  
+The `.streamlit/secrets.toml` file should be included in `.gitignore`.
+Also add this line to your .gitignore if it’s not already there:
+
+.streamlit/secrets.toml
 
 ### 3️⃣ Run the Application
 
