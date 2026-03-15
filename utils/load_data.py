@@ -16,6 +16,13 @@ def load_dataset(path):
         file_path = os.path.join(BASE_DIR, path)
         ds = xr.open_dataset(file_path)
 
+
+    st.write("Dataset info")
+    st.write(ds)
+    st.write("Coords:", ds.coords)
+
+
+
     # Convert temperature
     if "t2m" in ds:
         ds["t2m"] = ds["t2m"] - 273.15
