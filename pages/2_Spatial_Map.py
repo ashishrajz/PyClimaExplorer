@@ -166,11 +166,50 @@ rotation_lon = st.session_state.time_index * rotation_speed
 
 map_data = ds[variable].isel({time_dim: st.session_state.time_index})
 
-# Only coarsen if dataset is large
-map_data = ds[variable].sel({time_dim: selected_time}).values
+# Force load data (important for cloud environments)
+map_data = ds[variable].isel({time_dim: st.session_state.time_index}).load()
 
 lat = ds[lat_dim].values
 lon = ds[lon_dim].values
+
+# Convert to numpy array
+map_data = map_data.values
+
+
+# ================= DEBUG OUTPUT =================
+st.write("DEBUG DATASET INFO")
+st.write("Variable:", variable)
+
+try:
+    st.write("Dataset dims:", ds.dims)
+except:
+    pass
+
+try:
+    st.write("Map shape:", map_data.shape)
+except:
+    pass
+
+try:
+    st.write("Latitude size:", len(lat))
+    st.write("Longitude size:", len(lon))
+except:
+    pass
+
+try:
+    st.write("Min value:", np.nanmin(map_data))
+    st.write("Max value:", np.nanmax(map_data))
+except:
+    st.write("Min/Max calculation failed")
+
+try:
+    st.write("Any NaNs:", np.isnan(map_data).any())
+except:
+    pass
+
+st.write("First 5 values:", map_data.flatten()[:5])
+# =================================================
+
 
 
 # ===============================
@@ -232,7 +271,7 @@ else:
     df = pd.DataFrame({
         "lat": lat_grid.flatten(),
         "lon": lon_grid.flatten(),
-        "value": map_data.values.flatten()
+        "value": map_data.flatten()
     })
 
     fig = go.Figure()
